@@ -15,7 +15,7 @@ export default function NotFound() {
       <Heading tag="heading1">404 Not Found</Heading>
       <Paragraph>Looks like you've hit a page that doesn't exist.</Paragraph>
       <Button
-        backgroundColor="blue"
+        backgroundcolor="blue"
         onClick={() => navigate("/")}
         label="Let's go home"
       />

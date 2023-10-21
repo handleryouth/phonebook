@@ -1,7 +1,7 @@
 import { ComponentProps } from "react";
 import { InputText } from "primereact/inputtext";
 import styled from "@emotion/styled";
-import Flex from "../Flex";
+import { Flex } from "../flex";
 
 const StyledInput = styled(InputText)`
   &:focus {

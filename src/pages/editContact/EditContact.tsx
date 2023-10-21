@@ -285,7 +285,7 @@ export default function EditContacts() {
           label="Add Another Phone Number"
         />
 
-        <Button type="submit" backgroundColor="blue" label="Submit" />
+        <Button type="submit" backgroundcolor="blue" label="Submit" />
       </StyledForm>
     </div>
   );

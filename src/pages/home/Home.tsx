@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import HomeCard, { HomeCardProps } from "./HomeCard";
-import { Heading, Paragraph, Seo } from "components";
+import { Heading, Paragraph, Seo, Flex } from "components";
 import styled from "@emotion/styled";
-import Flex from "components/Flex";
 import { css } from "@emotion/react";
 import { getMediaMaxQuery } from "consts";
 

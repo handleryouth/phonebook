@@ -28,7 +28,7 @@ export default function DeleteModal({
           <StyledButton label="Cancel" onClick={toggleCloseModal} />
           <StyledButton
             label="Delete"
-            backgroundColor="blue"
+            backgroundcolor="blue"
             onClick={onConfirm}
           />
         </Flex>
