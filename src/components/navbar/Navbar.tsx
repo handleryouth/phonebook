@@ -16,6 +16,9 @@ const StyledNav = styled.nav`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.black};
   padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
   border-bottom: 1px solid ${({ theme }) => theme.borderColors.gray};
 `;
 

@@ -10,3 +10,4 @@ export * from "./input";
 export * from "./seo";
 export * from "./loadingIndicator";
 export * from "./heading";
+export * from "./favoritesSidebar";

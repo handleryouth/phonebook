@@ -2,7 +2,12 @@ import { PrimeReactProvider } from "primereact/api";
 import { RouteStack } from "routes";
 import { Layout } from "components";
 import { MemoryRouter } from "react-router-dom";
-import { SeoProvider, ServicesProvider, ThemeProvider } from "context";
+import {
+  FavoritesContactProvider,
+  SeoProvider,
+  ServicesProvider,
+  ThemeProvider,
+} from "context";
 import "primeicons/primeicons.css";
 import "@fontsource-variable/inter";
 
@@ -13,9 +18,11 @@ function App() {
         <MemoryRouter>
           <ThemeProvider>
             <SeoProvider>
-              <Layout>
-                <RouteStack />
-              </Layout>
+              <FavoritesContactProvider>
+                <Layout>
+                  <RouteStack />
+                </Layout>
+              </FavoritesContactProvider>
             </SeoProvider>
           </ThemeProvider>
         </MemoryRouter>

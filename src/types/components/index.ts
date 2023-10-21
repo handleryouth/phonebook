@@ -6,3 +6,4 @@ export * from "./Layout";
 export * from "./Pagination";
 export * from "./Seo";
 export * from "./Table";
+export * from "./FavoritesSidebar";

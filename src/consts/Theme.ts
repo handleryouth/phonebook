@@ -9,6 +9,7 @@ export const THEME: Theme = {
     white: "#ffffff",
     black: "#000000",
     blue: "#3B82F6",
+    blackLight: "#161d21",
   },
   borderColors: {
     gray: "#cccccc",

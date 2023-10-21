@@ -27,6 +27,7 @@ import { MenuItem } from "primereact/menuitem";
 import DeleteModal from "./DeleteModal";
 import { css } from "@emotion/react";
 import { getMediaMaxQuery } from "consts";
+import { useFavoritesContact } from "context";
 
 const StyledHeading = styled(Heading)`
   text-align: center;
@@ -71,6 +72,8 @@ export default function Contacts() {
     search: "",
   });
 
+  const { dispatch, values: favoritesValue } = useFavoritesContact();
+
   const searchQuery = searchParams.get("search");
 
   const pageQuery = searchParams.get("page");
@@ -87,24 +90,48 @@ export default function Contacts() {
   const navigate = useNavigate();
 
   const actionItems = useCallback(
-    (item: ContactListType): MenuItem[] => [
-      {
-        label: "Delete",
-        icon: "pi pi-trash",
-        command: () => {
-          setShowDeleteModal({
-            visible: true,
-            id: item.id,
-          });
+    (item: ContactListType): MenuItem[] => {
+      const isFavorite = favoritesValue?.[item.id] !== undefined;
+      return [
+        {
+          label: "Delete",
+          icon: "pi pi-trash",
+          command: () => {
+            setShowDeleteModal({
+              visible: true,
+              id: item.id,
+            });
+          },
         },
-      },
-      {
-        label: "Favorite",
-        icon: "pi pi-star",
-        command: () => {},
-      },
-    ],
-    []
+        {
+          label: isFavorite ? "Unfavorite" : "Favorite",
+          icon: `pi ${isFavorite ? "pi-star-fill" : "pi-star"}`,
+          command: () => {
+            toast.current?.show({
+              severity: "success",
+              summary: "Success",
+              detail: isFavorite
+                ? "Contact removed from favorites"
+                : "Contact added to favorites",
+            });
+
+            if (isFavorite) {
+              dispatch((prevState) => {
+                const newState = { ...prevState };
+                delete newState[item.id];
+                return newState;
+              });
+            } else {
+              dispatch((prevState) => ({
+                ...prevState,
+                [item.id]: item,
+              }));
+            }
+          },
+        },
+      ];
+    },
+    [dispatch, favoritesValue]
   );
 
   const { data: dataCount } = useQuery<ContactCountProps>(GET_CONTACT_COUNT, {
