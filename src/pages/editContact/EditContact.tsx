@@ -65,7 +65,7 @@ export default function EditContacts() {
 
   const { control, handleSubmit, reset } = useForm<CreateFormProps>();
 
-  const { data: detailData, loading } = useQuery(GET_CONTACT_DETAIL, {
+  const { data: detailData } = useQuery(GET_CONTACT_DETAIL, {
     variables: {
       id: Number(id),
     },

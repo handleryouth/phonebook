@@ -1,26 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import Flex from "./Flex";
 import styled from "@emotion/styled";
-import Heading from "./Heading";
 import Link from "./Link";
-import { FaAtlas } from "react-icons/fa";
-import { css, useTheme } from "@emotion/react";
-import { getMediaMaxQuery } from "consts";
-
-const NAVBAR_LINK = [
-  {
-    name: "Home",
-    href: "/",
-  },
-  {
-    name: "Contact List",
-    href: "/contacts",
-  },
-  {
-    name: "Create Contact",
-    href: "/create",
-  },
-];
+import { css } from "@emotion/react";
+import { NAVBAR_LINK, getMediaMaxQuery, getMediaMinQuery } from "consts";
+import Branding from "./Branding";
+import Sidebar from "./Sidebar";
+import { Button } from "./button";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { useState } from "react";
 
 const StyledNav = styled.nav`
   display: flex;
@@ -32,38 +20,44 @@ const StyledNav = styled.nav`
 `;
 
 export default function Navbar() {
-  const theme = useTheme();
+  const [showSidebar, setShowSidebar] = useState(false);
+
   return (
-    <StyledNav
-      css={css({
-        [getMediaMaxQuery("560")]: {
-          justifyContent: "center",
-        },
-      })}
-    >
-      <Flex columnGap={10} color="white" alignItems="center">
-        <Heading tag="heading1" color="white">
-          Contacts
-        </Heading>
+    <>
+      <Sidebar
+        toggleCloseSidebar={() => setShowSidebar(false)}
+        visible={showSidebar}
+      />
+      <StyledNav>
+        <Branding />
 
-        <FaAtlas size={20} color={theme.colors.white} />
-      </Flex>
+        <Button
+          css={css({
+            [getMediaMinQuery("560")]: {
+              display: "none",
+            },
+          })}
+          onClick={() => setShowSidebar(true)}
+        >
+          <GiHamburgerMenu />
+        </Button>
 
-      <Flex
-        css={css({
-          [getMediaMaxQuery("560")]: {
-            display: "none",
-          },
-        })}
-        alignItems="center"
-        columnGap={23}
-      >
-        {NAVBAR_LINK.map((item, index) => (
-          <Link to={item.href} key={index}>
-            {item.name}
-          </Link>
-        ))}
-      </Flex>
-    </StyledNav>
+        <Flex
+          css={css({
+            [getMediaMaxQuery("560")]: {
+              display: "none",
+            },
+          })}
+          alignItems="center"
+          columnGap={23}
+        >
+          {NAVBAR_LINK.map((item, index) => (
+            <Link to={item.href} key={index}>
+              {item.name}
+            </Link>
+          ))}
+        </Flex>
+      </StyledNav>
+    </>
   );
 }
