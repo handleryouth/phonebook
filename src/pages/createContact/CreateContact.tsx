@@ -153,7 +153,7 @@ export default function Create() {
                 alignItems: "start",
               },
             })}
-            alignItems="flex-end"
+            alignItems="center"
             width="100%"
             gap={10}
             key={item.id}
@@ -168,9 +168,22 @@ export default function Create() {
                 }}
                 rules={{
                   required: "Phone Number is required",
+                  validate: {
+                    isUnique: (value) => {
+                      if (index > 0) {
+                        const isUnique = fields.find(
+                          (item) => item.number === value
+                        );
+
+                        if (isUnique) {
+                          return "Phone Number must be unique.";
+                        }
+                      }
+                    },
+                  },
                   pattern: {
                     value: REGEX_NUMBER_ONLY,
-                    message: "Phone Number can only contain numbers",
+                    message: "Phone Number can only contain numbers.",
                   },
                 }}
                 name={`phones.${index}.number`}

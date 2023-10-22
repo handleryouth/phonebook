@@ -2,7 +2,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { Button,Flex, Heading, InputRHF } from "components";
+import { Button, Flex, Heading, InputRHF } from "components";
 import {
   getMediaMaxQuery,
   getMediaMinQuery,
@@ -19,10 +19,10 @@ import {
 import { Phone_Insert_Input } from "graphqlCodegen/build/graphql";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
-import { FieldArrayWithId,useFieldArray, useForm } from "react-hook-form";
+import { FieldArrayWithId, useFieldArray, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 
-import { CreateFormProps,EditContactParamsProps } from "./EditContactType";
+import { CreateFormProps, EditContactParamsProps } from "./EditContactType";
 
 const StyledForm = styled.form`
   display: flex;
@@ -55,7 +55,9 @@ export default function EditContacts() {
 
   const { id } = useParams<EditContactParamsProps>();
 
-  const { control, handleSubmit, reset } = useForm<CreateFormProps>();
+  const { control, handleSubmit, reset } = useForm<CreateFormProps>({
+    mode: "onChange",
+  });
 
   const { data: detailData } = useQuery(GET_CONTACT_DETAIL, {
     variables: {
@@ -235,7 +237,7 @@ export default function EditContacts() {
                 alignItems: "start",
               },
             })}
-            alignItems="flex-end"
+            alignItems="center"
             width="100%"
             gap={10}
             key={item.id}
@@ -250,6 +252,19 @@ export default function EditContacts() {
                 }}
                 rules={{
                   required: "Phone Number is required",
+                  validate: {
+                    isUnique: (value) => {
+                      if (index > 0) {
+                        const isUnique = fields.find(
+                          (item) => item.number === value
+                        );
+
+                        if (isUnique) {
+                          return "Phone Number must be unique.";
+                        }
+                      }
+                    },
+                  },
                   pattern: {
                     value: REGEX_NUMBER_ONLY,
                     message: "Phone Number can only contain numbers",
