@@ -5,10 +5,12 @@ import { Link } from "../link";
 import { css } from "@emotion/react";
 import { NAVBAR_LINK, getMediaMaxQuery, getMediaMinQuery } from "consts";
 import { Branding } from "../branding";
-import { Sidebar } from "../sidebar";
 import { Button } from "../button";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useState } from "react";
+import { Suspense, useState, lazy } from "react";
+import { getWindowDimensions } from "utils";
+
+const LazySidebar = lazy(() => import("../sidebar/Sidebar"));
 
 const StyledNav = styled.nav`
   display: flex;
@@ -27,10 +29,15 @@ export default function Navbar() {
 
   return (
     <>
-      <Sidebar
-        toggleCloseSidebar={() => setShowSidebar(false)}
-        visible={showSidebar}
-      />
+      <Suspense>
+        {getWindowDimensions().width < 560 && (
+          <LazySidebar
+            toggleCloseSidebar={() => setShowSidebar(false)}
+            visible={showSidebar}
+          />
+        )}
+      </Suspense>
+
       <StyledNav role="navigation">
         <Branding />
 
