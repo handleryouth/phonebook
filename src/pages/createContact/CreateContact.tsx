@@ -13,12 +13,7 @@ import { CREATE_CONTACT } from "graphqlCodegen";
 import { Phone_Insert_Input } from "graphqlCodegen/build/graphql";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
-import {
-  FieldArrayWithId,
-  useFieldArray,
-  useForm,
-  useWatch,
-} from "react-hook-form";
+import { FieldArrayWithId, useFieldArray, useForm } from "react-hook-form";
 
 import { CreateFormProps } from "./CreateContactType";
 
@@ -51,12 +46,7 @@ const StyledInputContainer = styled.div`
 export default function Create() {
   const toast = useRef<Toast>(null);
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<CreateFormProps>({
+  const { control, handleSubmit, reset, getValues } = useForm<CreateFormProps>({
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -66,15 +56,9 @@ export default function Create() {
         },
       ],
     },
-    mode: "onChange",
-  });
 
-  const phonesArray = useWatch({
-    control,
-    name: "phones",
+    reValidateMode: "onSubmit",
   });
-
-  const errorTotal = Object.keys(errors).length;
 
   const [createContact] = useMutation(CREATE_CONTACT, {
     onCompleted: () => {
@@ -180,11 +164,12 @@ export default function Create() {
                   required: "Phone Number is required",
                   validate: {
                     isUnique: (value) => {
-                      const isUnique = phonesArray.find(
+                      const getValuesNumber = getValues("phones");
+                      const isUnique = getValuesNumber.filter(
                         (item) => item.number === value
                       );
 
-                      if (isUnique) {
+                      if (isUnique.length > 1) {
                         return "Phone Number must be unique.";
                       }
                     },
@@ -211,17 +196,12 @@ export default function Create() {
           onClick={() =>
             append({
               number: "",
-            } as Phone_Insert_Input)
+            })
           }
           label="Add Another Phone Number"
         />
 
-        <Button
-          disabled={errorTotal > 0}
-          type="submit"
-          backgroundcolor="blue"
-          label="Submit"
-        />
+        <Button type="submit" backgroundcolor="blue" label="Submit" />
       </StyledForm>
     </div>
   );

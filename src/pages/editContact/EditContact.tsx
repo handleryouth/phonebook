@@ -19,12 +19,7 @@ import {
 import { Phone_Insert_Input } from "graphqlCodegen/build/graphql";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
-import {
-  FieldArrayWithId,
-  useFieldArray,
-  useForm,
-  useWatch,
-} from "react-hook-form";
+import { FieldArrayWithId, useFieldArray, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 
 import { CreateFormProps, EditContactParamsProps } from "./EditContactType";
@@ -60,13 +55,8 @@ export default function EditContacts() {
 
   const { id } = useParams<EditContactParamsProps>();
 
-  const { control, handleSubmit, reset } = useForm<CreateFormProps>({
-    mode: "onChange",
-  });
-
-  const phonesArray = useWatch({
-    control,
-    name: "phones",
+  const { control, handleSubmit, reset, getValues } = useForm<CreateFormProps>({
+    reValidateMode: "onSubmit",
   });
 
   const { data: detailData } = useQuery(GET_CONTACT_DETAIL, {
@@ -128,70 +118,77 @@ export default function EditContacts() {
     name: "phones",
   });
 
-  const createContactHandler = async (data: CreateFormProps) => {
+  const createContactHandler = (data: CreateFormProps) => {
     const { firstName, lastName, phones: phonesData } = data;
 
-    editContact({
-      variables: {
-        id: Number(id),
-        _set: {
-          first_name: firstName,
-          last_name: lastName,
-          created_at:
-            detailData?.contact_by_pk?.created_at ?? new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        },
-      },
-    });
-
-    if (phonesData.length < (detailData?.contact_by_pk?.phones?.length ?? 0)) {
-      const deletedPhoneNumbers = detailData?.contact_by_pk?.phones.filter(
-        (item) => {
-          return !phonesData.some((phone) => phone.number === item.number);
-        }
-      );
-
-      deletedPhoneNumbers?.forEach((item) => {
-        deletePhoneNumber({
-          variables: {
-            contact_id: Number(id),
-            number: item.number,
+    if (
+      firstName !== detailData?.contact_by_pk?.first_name ||
+      lastName !== detailData?.contact_by_pk?.last_name
+    ) {
+      editContact({
+        variables: {
+          id: Number(id),
+          _set: {
+            first_name: firstName,
+            last_name: lastName,
+            created_at:
+              detailData?.contact_by_pk?.created_at ?? new Date().toISOString(),
+            updated_at: new Date().toISOString(),
           },
-        });
+        },
       });
-    } else {
-      phonesData.forEach((phone, index) => {
-        const phoneId = detailData?.contact_by_pk?.id;
 
-        if (
-          phone.number !== undefined &&
-          phone.number !== null &&
-          phoneId !== undefined &&
-          detailData?.contact_by_pk?.phones[index]?.number !== undefined &&
-          phone.number !== detailData?.contact_by_pk?.phones[index].number
-        ) {
-          editPhoneNumber({
-            variables: {
-              new_phone_number: phone.number,
-              pk_columns: {
-                contact_id: phoneId,
-                number: detailData?.contact_by_pk?.phones[index].number,
-              },
-            },
-          });
-        } else if (
-          phone.number !== undefined &&
-          phone.number !== null &&
-          detailData?.contact_by_pk?.phones[index]?.number === undefined
-        ) {
-          insertPhoneNumber({
+      if (
+        phonesData.length < (detailData?.contact_by_pk?.phones?.length ?? 0)
+      ) {
+        const deletedPhoneNumbers = detailData?.contact_by_pk?.phones.filter(
+          (item) => {
+            return !phonesData.some((phone) => phone.number === item.number);
+          }
+        );
+
+        deletedPhoneNumbers?.forEach((item) => {
+          deletePhoneNumber({
             variables: {
               contact_id: Number(id),
-              phone_number: phone.number,
+              number: item.number,
             },
           });
-        }
-      });
+        });
+      } else {
+        phonesData.forEach((phone, index) => {
+          const phoneId = detailData?.contact_by_pk?.id;
+
+          if (
+            phone.number !== undefined &&
+            phone.number !== null &&
+            phoneId !== undefined &&
+            detailData?.contact_by_pk?.phones[index]?.number !== undefined &&
+            phone.number !== detailData?.contact_by_pk?.phones[index].number
+          ) {
+            editPhoneNumber({
+              variables: {
+                new_phone_number: phone.number,
+                pk_columns: {
+                  contact_id: phoneId,
+                  number: detailData?.contact_by_pk?.phones[index].number,
+                },
+              },
+            });
+          } else if (
+            phone.number !== undefined &&
+            phone.number !== null &&
+            detailData?.contact_by_pk?.phones[index]?.number === undefined
+          ) {
+            insertPhoneNumber({
+              variables: {
+                contact_id: Number(id),
+                phone_number: phone.number,
+              },
+            });
+          }
+        });
+      }
     }
   };
 
@@ -264,11 +261,12 @@ export default function EditContacts() {
                   required: "Phone Number is required",
                   validate: {
                     isUnique: (value) => {
-                      const isUnique = phonesArray.find(
+                      const getValuesNumber = getValues("phones");
+                      const isUnique = getValuesNumber.filter(
                         (item) => item.number === value
                       );
 
-                      if (isUnique) {
+                      if (isUnique.length > 1) {
                         return "Phone Number must be unique.";
                       }
                     },
@@ -295,7 +293,7 @@ export default function EditContacts() {
           onClick={() =>
             append({
               number: "",
-            } as Phone_Insert_Input)
+            })
           }
           label="Add Another Phone Number"
         />
