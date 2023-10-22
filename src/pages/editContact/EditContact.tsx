@@ -4,6 +4,12 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Button, Flex, Heading, InputRHF } from "components";
 import {
+  ERROR_DELETING_PHONE_NUMBER,
+  ERROR_DUPLICATE_NUMBER_KEY,
+  ERROR_DUPLICATE_NUMBER_MESSAGE,
+  ERROR_EDITING_PHONE_NUMBER,
+  ERROR_INSERTING_PHONE_NUMBER,
+  ERROR_SOMETHING_WENT_WRONG,
   getMediaMaxQuery,
   getMediaMinQuery,
   REGEX_NUMBER_ONLY,
@@ -27,7 +33,8 @@ import { CreateFormProps, EditContactParamsProps } from "./EditContactType";
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  column-gap: 2rem;
+  row-gap: 2.5rem;
   width: 70%;
   margin: auto;
   min-width: 270px;
@@ -83,18 +90,28 @@ export default function EditContacts() {
   };
 
   const [insertPhoneNumber] = useMutation(INSERT_PHONE_NUMBER, {
-    onError: () => {
-      toggleErrorToast("Error inserting phone number");
+    onError: (error) => {
+      if (error.message === ERROR_DUPLICATE_NUMBER_KEY) {
+        toggleErrorToast(ERROR_DUPLICATE_NUMBER_MESSAGE);
+      } else {
+        toggleErrorToast(ERROR_INSERTING_PHONE_NUMBER);
+      }
     },
   });
 
   const [editPhoneNumber] = useMutation(EDIT_PHONE_NUMBER, {
-    onError: () => toggleErrorToast("Error editing phone number"),
+    onError: (error) => {
+      if (error.message === ERROR_DUPLICATE_NUMBER_KEY) {
+        toggleErrorToast(ERROR_DUPLICATE_NUMBER_MESSAGE);
+      } else {
+        toggleErrorToast(ERROR_EDITING_PHONE_NUMBER);
+      }
+    },
   });
 
   const [deletePhoneNumber] = useMutation(DELETE_PHONE_NUMBER, {
     onError: () => {
-      toggleErrorToast("Error deleting phone number");
+      toggleErrorToast(ERROR_DELETING_PHONE_NUMBER);
     },
   });
 
@@ -107,9 +124,7 @@ export default function EditContacts() {
       });
     },
     onError: () => {
-      toggleErrorToast(
-        "Something went wrong. Please check your input and try again"
-      );
+      toggleErrorToast(ERROR_SOMETHING_WENT_WRONG);
     },
   });
 
@@ -246,7 +261,8 @@ export default function EditContacts() {
             })}
             alignItems="flex-end"
             width="100%"
-            gap={10}
+            columnGap={10}
+            rowGap={20}
             key={item.id}
           >
             <StyledInputContainer>

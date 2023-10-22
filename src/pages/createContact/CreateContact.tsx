@@ -4,6 +4,9 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Button, Flex, Heading, InputRHF } from "components";
 import {
+  ERROR_DUPLICATE_NUMBER_KEY,
+  ERROR_DUPLICATE_NUMBER_MESSAGE,
+  ERROR_SOMETHING_WENT_WRONG,
   getMediaMaxQuery,
   getMediaMinQuery,
   REGEX_NUMBER_ONLY,
@@ -20,7 +23,8 @@ import { CreateFormProps } from "./CreateContactType";
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  column-gap: 2rem;
+  row-gap: 2.5rem;
   width: 70%;
   margin: auto;
   min-width: 270px;
@@ -60,6 +64,14 @@ export default function Create() {
     reValidateMode: "onSubmit",
   });
 
+  const showErrorToast = (message: string) => {
+    toast.current?.show({
+      severity: "error",
+      summary: "Error",
+      detail: message,
+    });
+  };
+
   const [createContact] = useMutation(CREATE_CONTACT, {
     onCompleted: () => {
       toast.current?.show({
@@ -69,12 +81,12 @@ export default function Create() {
       });
       reset();
     },
-    onError: () => {
-      toast.current?.show({
-        severity: "error",
-        summary: "Error",
-        detail: "Something went wrong. Please check your input and try again",
-      });
+    onError: (error) => {
+      if (error.message === ERROR_DUPLICATE_NUMBER_KEY) {
+        showErrorToast(ERROR_DUPLICATE_NUMBER_MESSAGE);
+      } else {
+        showErrorToast(ERROR_SOMETHING_WENT_WRONG);
+      }
     },
   });
 
@@ -149,7 +161,8 @@ export default function Create() {
             })}
             alignItems="flex-end"
             width="100%"
-            gap={10}
+            columnGap={10}
+            rowGap={25}
             key={item.id}
           >
             <StyledInputContainer>
