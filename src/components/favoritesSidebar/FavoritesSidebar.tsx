@@ -68,6 +68,7 @@ export default function FavoritesSidebar({
                     navigate(`/edit/${value.id}`);
                     toggleCloseSidebar();
                   }}
+                  backgroundcolor="blue"
                   label="Edit"
                 />
               </Flex>

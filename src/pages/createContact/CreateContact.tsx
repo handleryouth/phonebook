@@ -13,7 +13,12 @@ import { CREATE_CONTACT } from "graphqlCodegen";
 import { Phone_Insert_Input } from "graphqlCodegen/build/graphql";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
-import { FieldArrayWithId, useFieldArray, useForm } from "react-hook-form";
+import {
+  FieldArrayWithId,
+  useFieldArray,
+  useForm,
+  useWatch,
+} from "react-hook-form";
 
 import { CreateFormProps } from "./CreateContactType";
 
@@ -62,6 +67,11 @@ export default function Create() {
       ],
     },
     mode: "onChange",
+  });
+
+  const phonesArray = useWatch({
+    control,
+    name: "phones",
   });
 
   const errorTotal = Object.keys(errors).length;
@@ -153,7 +163,7 @@ export default function Create() {
                 alignItems: "start",
               },
             })}
-            alignItems="center"
+            alignItems="flex-end"
             width="100%"
             gap={10}
             key={item.id}
@@ -170,14 +180,12 @@ export default function Create() {
                   required: "Phone Number is required",
                   validate: {
                     isUnique: (value) => {
-                      if (index > 0) {
-                        const isUnique = fields.find(
-                          (item) => item.number === value
-                        );
+                      const isUnique = phonesArray.find(
+                        (item) => item.number === value
+                      );
 
-                        if (isUnique) {
-                          return "Phone Number must be unique.";
-                        }
+                      if (isUnique) {
+                        return "Phone Number must be unique.";
                       }
                     },
                   },

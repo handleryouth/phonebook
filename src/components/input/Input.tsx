@@ -14,6 +14,15 @@ interface InputBaseProps extends ComponentProps<typeof InputText> {
   errorMessage?: string;
 }
 
+const StyledFlex = styled(Flex)`
+  position: relative;
+`;
+
+const StyledErrorMessage = styled.small`
+  position: absolute;
+  bottom: -20px;
+`;
+
 export type InputProps = (
   | {
       label?: undefined;
@@ -33,11 +42,15 @@ export default function Input({
 }: InputProps) {
   if (label !== undefined) {
     return (
-      <Flex flexDirection="column" rowGap={2}>
+      <StyledFlex flexDirection="column" rowGap={2}>
         <label htmlFor={name}>{label}</label>
         <StyledInput aria-labelledby={name} {...item} />
-        {errorMessage && <small className="p-error">{errorMessage}</small>}
-      </Flex>
+        {errorMessage && (
+          <StyledErrorMessage className="p-error">
+            {errorMessage}
+          </StyledErrorMessage>
+        )}
+      </StyledFlex>
     );
   }
 
