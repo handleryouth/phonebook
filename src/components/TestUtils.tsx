@@ -1,19 +1,20 @@
 /**
  * @jest-environment jsdom
  */
-import { PrimeReactProvider } from "primereact/api";
-import { BrowserRouter } from "react-router-dom";
+import "primeicons/primeicons.css";
+import "@fontsource-variable/inter";
+import "@testing-library/jest-dom";
+
+import { render,RenderOptions } from "@testing-library/react";
 import {
   FavoritesContactProvider,
   SeoProvider,
   ServicesProvider,
   ThemeProvider,
 } from "context";
+import { PrimeReactProvider } from "primereact/api";
 import { ReactElement, ReactNode } from "react";
-import { RenderOptions, render } from "@testing-library/react";
-import "primeicons/primeicons.css";
-import "@fontsource-variable/inter";
-import "@testing-library/jest-dom";
+import { BrowserRouter } from "react-router-dom";
 
 interface TestSetupProps {
   children: ReactNode;

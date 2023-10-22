@@ -1,7 +1,8 @@
 import { ComponentProps } from "react";
-import { Link } from "react-router-dom";
-import { ThemeColors } from "../Theme";
 import { IconType } from "react-icons";
+import { Link } from "react-router-dom";
+
+import { ThemeColors } from "../Theme";
 
 export interface LinkProps extends ComponentProps<typeof Link> {
   color?: ThemeColors;

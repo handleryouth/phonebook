@@ -1,9 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import HomeCard, { HomeCardProps } from "./HomeCard";
-import { Heading, Paragraph, Seo, Flex } from "components";
-import styled from "@emotion/styled";
 import { css } from "@emotion/react";
+import styled from "@emotion/styled";
+import { Flex, Heading, Paragraph, Seo } from "components";
 import { getMediaMaxQuery } from "consts";
+
+import HomeCard from "./HomeCard";
+import { HomeCardProps } from "./HomeType";
 
 const HOME_MENU_LINK: HomeCardProps[] = [
   {

@@ -4,16 +4,18 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Button, Flex, Heading, InputRHF } from "components";
 import {
-  REGEX_NUMBER_ONLY,
-  REGEX_SPECIAL_CHARACTERS,
   getMediaMaxQuery,
   getMediaMinQuery,
+  REGEX_NUMBER_ONLY,
+  REGEX_SPECIAL_CHARACTERS,
 } from "consts";
 import { CREATE_CONTACT } from "graphqlCodegen";
 import { Phone_Insert_Input } from "graphqlCodegen/build/graphql";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { FieldArrayWithId, useFieldArray, useForm } from "react-hook-form";
+
+import { CreateFormProps } from "./CreateContactType";
 
 const StyledForm = styled.form`
   display: flex;
@@ -40,12 +42,6 @@ const StyledInputContainer = styled.div`
   flex-grow: 1;
   width: 100%;
 `;
-
-interface CreateFormProps {
-  firstName: string;
-  lastName: string;
-  phones: Phone_Insert_Input[];
-}
 
 export default function Create() {
   const toast = useRef<Toast>(null);

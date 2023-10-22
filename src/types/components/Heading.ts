@@ -1,4 +1,5 @@
 import { HTMLAttributes, ReactNode } from "react";
+
 import { ThemeColors } from "../Theme";
 
 export type HeadingTagType =

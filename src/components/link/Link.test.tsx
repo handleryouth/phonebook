@@ -1,5 +1,5 @@
-import Link from "./Link";
 import { render, screen } from "../TestUtils";
+import Link from "./Link";
 
 render(<Link to="#">test</Link>);
 

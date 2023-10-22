@@ -1,12 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import { Sidebar as PrimereactSidebar } from "primereact/sidebar";
-import { Branding } from "../branding";
-import { NAVBAR_LINK, getMediaMinQuery } from "consts";
-import { Link } from "../link";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { Heading } from "../heading";
+import { getMediaMinQuery,NAVBAR_LINK } from "consts";
+import { Sidebar as PrimereactSidebar } from "primereact/sidebar";
 import { SidebarProps } from "types";
+
+import { Branding } from "../branding";
+import { Heading } from "../heading";
+import { Link } from "../link";
 
 const StyledUl = styled.ul`
   padding: 0;

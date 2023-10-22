@@ -13,7 +13,9 @@ export default function NotFound() {
       rowGap={10}
     >
       <Heading tag="heading1">404 Not Found</Heading>
-      <Paragraph>Looks like you've hit a page that doesn't exist.</Paragraph>
+      <Paragraph>
+        Looks like you&apos;`ve hit a page that doesn&apos;`t exist.
+      </Paragraph>
       <Button
         backgroundcolor="blue"
         onClick={() => navigate("/")}

@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import { Paragraph } from "../paragraph";
+
 import { ExternalLink } from "../externalLink";
+import { Paragraph } from "../paragraph";
 
 const StyledFooter = styled.footer`
   display: flex;
@@ -8,7 +9,10 @@ const StyledFooter = styled.footer`
   align-items: center;
   height: 100px;
   background-color: ${({ theme }) => theme.backgroundColors.black};
-  border-top: 1px solid #eaeaea;
+  border-top: solid;
+  border-width: 2px;
+  border-image: ${({ theme }) =>
+    `linear-gradient(to right, ${theme.borderColors.purple}, ${theme.borderColors.orchid}) 1`};
 `;
 
 export default function Footer() {

@@ -2,12 +2,12 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { InputRHF, Flex, Heading, Button } from "components";
+import { Button,Flex, Heading, InputRHF } from "components";
 import {
-  REGEX_NUMBER_ONLY,
-  REGEX_SPECIAL_CHARACTERS,
   getMediaMaxQuery,
   getMediaMinQuery,
+  REGEX_NUMBER_ONLY,
+  REGEX_SPECIAL_CHARACTERS,
 } from "consts";
 import {
   DELETE_PHONE_NUMBER,
@@ -19,8 +19,10 @@ import {
 import { Phone_Insert_Input } from "graphqlCodegen/build/graphql";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
-import { useForm, useFieldArray, FieldArrayWithId } from "react-hook-form";
+import { FieldArrayWithId,useFieldArray, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+
+import { CreateFormProps,EditContactParamsProps } from "./EditContactType";
 
 const StyledForm = styled.form`
   display: flex;
@@ -47,16 +49,6 @@ const StyledInputContainer = styled.div`
   flex-grow: 1;
   width: 100%;
 `;
-
-type EditContactParamsProps = {
-  id: string;
-};
-
-interface CreateFormProps {
-  firstName: string;
-  lastName: string;
-  phones: Phone_Insert_Input[];
-}
 
 export default function EditContacts() {
   const toast = useRef<Toast>(null);
@@ -157,7 +149,7 @@ export default function EditContacts() {
       });
     } else {
       phonesData.forEach((phone, index) => {
-        let phoneId = detailData?.contact_by_pk?.id;
+        const phoneId = detailData?.contact_by_pk?.id;
 
         if (
           phone.number !== undefined &&

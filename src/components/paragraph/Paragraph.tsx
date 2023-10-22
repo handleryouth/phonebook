@@ -1,5 +1,5 @@
-import { ComponentProps } from "react";
 import styled from "@emotion/styled";
+import { ComponentProps } from "react";
 import { ThemeColors } from "types";
 
 export interface ParagraphProps extends ComponentProps<"p"> {

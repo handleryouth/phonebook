@@ -1,6 +1,6 @@
-import { ComponentProps } from "react";
-import { Button as PrimereactButton } from "primereact/button";
 import styled from "@emotion/styled";
+import { Button as PrimereactButton } from "primereact/button";
+import { ComponentProps } from "react";
 import { ThemeBackgroundColors, ThemeBorderColors, ThemeColors } from "types";
 
 interface StyledButtonProps {

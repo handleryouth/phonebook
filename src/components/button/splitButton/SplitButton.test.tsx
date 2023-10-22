@@ -1,5 +1,5 @@
-import SplitButton from "./SplitButton";
 import { render, screen } from "../../TestUtils";
+import SplitButton from "./SplitButton";
 
 render(
   <SplitButton

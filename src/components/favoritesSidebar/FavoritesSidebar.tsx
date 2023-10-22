@@ -1,13 +1,14 @@
-import { useMemo } from "react";
-import { Sidebar } from "primereact/sidebar";
 import styled from "@emotion/styled";
 import { useFavoritesContact } from "context";
+import { Sidebar } from "primereact/sidebar";
+import { useMemo } from "react";
 import { FavoritesSidebarProps } from "types";
-import { Paragraph } from "../paragraph";
-import { Heading } from "../heading";
-import { Link } from "../link";
+
 import { Button } from "../button";
 import { Flex } from "../flex";
+import { Heading } from "../heading";
+import { Link } from "../link";
+import { Paragraph } from "../paragraph";
 
 const StyledFavoritesContaier = styled.div`
   border: 2px solid ${({ theme }) => theme.borderColors.gray};

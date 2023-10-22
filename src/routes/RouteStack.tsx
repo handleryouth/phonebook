@@ -1,7 +1,8 @@
-import { Route, Routes } from "react-router-dom";
-import { ROUTES_LIST } from "./RouteList";
-import { Suspense } from "react";
 import { Flex, LoadingIndicator } from "components";
+import { Suspense } from "react";
+import { Route, Routes } from "react-router-dom";
+
+import { ROUTES_LIST } from "./RouteList";
 
 export default function RouteStack() {
   return (

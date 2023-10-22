@@ -2,14 +2,15 @@ import styled from "@emotion/styled";
 import { Heading, Link, Paragraph } from "components";
 import { Card } from "primereact/card";
 
-export interface HomeCardProps {
-  title: string;
-  description: string;
-  url: string;
-}
+import { HomeCardProps } from "./HomeType";
 
 const StyledCard = styled(Card)`
-  background-color: ${({ theme }) => theme.backgroundColors.black};
+  background: ${({ theme }) => `linear-gradient(
+    45deg,
+    ${theme.borderColors.black} 84%,
+    ${theme.borderColors.purple} 92%,
+    ${theme.borderColors.blue} 100%
+  )`};
   border: 2px solid ${({ theme }) => theme.borderColors.gray};
   max-width: 400px;
   width: 100%;

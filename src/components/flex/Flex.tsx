@@ -1,6 +1,6 @@
-import { CSSProperties, HTMLAttributes, ReactNode } from "react";
-import styled from "@emotion/styled";
 import { css } from "@emotion/react";
+import styled from "@emotion/styled";
+import { CSSProperties, HTMLAttributes, ReactNode } from "react";
 
 export interface FlexProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;

@@ -1,9 +1,9 @@
 import { GetContactQuery } from "graphqlCodegen/build/graphql";
 import {
+  createContext,
   Dispatch,
   ReactNode,
   SetStateAction,
-  createContext,
   useContext,
   useMemo,
   useState,

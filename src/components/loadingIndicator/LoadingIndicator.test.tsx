@@ -1,5 +1,5 @@
-import LoadingIndicator from "./LoadingIndicator";
 import { render, screen } from "../TestUtils";
+import LoadingIndicator from "./LoadingIndicator";
 
 render(<LoadingIndicator size={20} />);
 

@@ -2,15 +2,11 @@ import styled from "@emotion/styled";
 import { Button, Flex, Paragraph } from "components";
 import { Dialog } from "primereact/dialog";
 
+import { DeleteModalProps } from "./ContactsType";
+
 const StyledButton = styled(Button)`
   width: 100%;
 `;
-
-interface DeleteModalProps {
-  visible: boolean;
-  toggleCloseModal: () => void;
-  onConfirm: () => void;
-}
 
 export default function DeleteModal({
   toggleCloseModal,

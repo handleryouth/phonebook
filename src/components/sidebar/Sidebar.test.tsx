@@ -1,6 +1,7 @@
-import Sidebar from "./Sidebar";
-import { render } from "../TestUtils";
 import { screen } from "@testing-library/react";
+
+import { render } from "../TestUtils";
+import Sidebar from "./Sidebar";
 
 render(<Sidebar toggleCloseSidebar={() => null} visible />);
 

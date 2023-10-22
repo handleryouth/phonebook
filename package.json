@@ -23,6 +23,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "lint": "eslint  ./ --ext js,jsx,ts,tsx",
+    "testing": "eslint --fix",
+    "lint:fix": "eslint ./ --ext js,jsx,ts,tsx --fix",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "codegen": "graphql-codegen --require dotenv/config --config codegen.ts dotenv_config_path=.env"
@@ -56,7 +59,12 @@
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
     "dotenv": "^16.3.1",
+    "eslint": "^8.52.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "ts-node": "^10.9.1"
   }
 }

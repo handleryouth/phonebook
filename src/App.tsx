@@ -1,15 +1,16 @@
-import { PrimeReactProvider } from "primereact/api";
-import { RouteStack } from "routes";
+import "primeicons/primeicons.css";
+import "@fontsource-variable/inter";
+
 import { Layout } from "components";
-import { BrowserRouter } from "react-router-dom";
 import {
   FavoritesContactProvider,
   SeoProvider,
   ServicesProvider,
   ThemeProvider,
 } from "context";
-import "primeicons/primeicons.css";
-import "@fontsource-variable/inter";
+import { PrimeReactProvider } from "primereact/api";
+import { BrowserRouter } from "react-router-dom";
+import { RouteStack } from "routes";
 
 function App() {
   return (

@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { ExternalLinkProps } from "types";
+
 import { Link } from "../link";
 
 const StyledLink = styled(Link)`

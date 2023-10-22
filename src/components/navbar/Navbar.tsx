@@ -1,14 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import { Flex } from "../flex";
-import styled from "@emotion/styled";
-import { Link } from "../link";
 import { css } from "@emotion/react";
-import { NAVBAR_LINK, getMediaMaxQuery, getMediaMinQuery } from "consts";
+import styled from "@emotion/styled";
+import { getMediaMaxQuery, getMediaMinQuery,NAVBAR_LINK } from "consts";
+import { lazy,Suspense, useState } from "react";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { getWindowDimensions } from "utils";
+
 import { Branding } from "../branding";
 import { Button } from "../button";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { Suspense, useState, lazy } from "react";
-import { getWindowDimensions } from "utils";
+import { Flex } from "../flex";
+import { Link } from "../link";
 
 const LazySidebar = lazy(() => import("../sidebar/Sidebar"));
 
@@ -21,7 +22,10 @@ const StyledNav = styled.nav`
   position: sticky;
   top: 0;
   z-index: 2;
-  border-bottom: 1px solid ${({ theme }) => theme.borderColors.gray};
+  border-bottom: solid;
+  border-width: 2px;
+  border-image: ${({ theme }) =>
+    `linear-gradient(to right, ${theme.borderColors.purple}, ${theme.borderColors.orchid}) 1`};
 `;
 
 export default function Navbar() {

@@ -6,8 +6,8 @@ export function formatDate(
   dateFormat: string = "MMMM dd, yyyy",
   options: Parameters<typeof format>[2] = {}
 ) {
-  let convertedDate = new Date(date);
-  let dateValidation = isDate(convertedDate);
+  const convertedDate = new Date(date);
+  const dateValidation = isDate(convertedDate);
 
   return dateValidation ? format(convertedDate, dateFormat, options) : date;
 }

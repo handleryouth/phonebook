@@ -1,5 +1,5 @@
-import Layout from "./Layout";
 import { render, screen } from "../TestUtils";
+import Layout from "./Layout";
 
 render(
   <Layout>

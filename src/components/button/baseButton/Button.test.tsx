@@ -1,5 +1,5 @@
-import Button from "./Button";
 import { render, screen } from "../../TestUtils";
+import Button from "./Button";
 
 render(<Button label="Test" />);
 

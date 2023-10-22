@@ -1,14 +1,15 @@
-/** @jsxImportSource @emotion/react */
-import { useState } from "react";
 import { Global, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { getBreakpoint, getMediaMinQuery } from "consts";
+import { useState } from "react";
+import { BsFillBookmarkStarFill } from "react-icons/bs";
 import { LayoutProps } from "types";
+
+import { Button } from "../button";
+import { FavoritesSidebar } from "../favoritesSidebar";
 import { Footer } from "../footer";
 import { Navbar } from "../navbar";
-import { FavoritesSidebar } from "../favoritesSidebar";
-import { Button } from "../button";
-import { BsFillBookmarkStarFill } from "react-icons/bs";
+/** @jsxImportSource @emotion/react */
 
 const StyledContainer = styled.div`
   min-height: 100vh;

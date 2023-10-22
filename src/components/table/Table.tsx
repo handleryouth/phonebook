@@ -1,6 +1,6 @@
-import { useMemo } from "react";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
+import { useMemo } from "react";
 import { TableCell, TableComponentProps } from "types";
 
 export default function Table<

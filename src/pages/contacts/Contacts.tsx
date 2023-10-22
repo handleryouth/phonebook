@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { Toast } from "primereact/toast";
-import { useForm } from "react-hook-form";
 import {
   Button,
   Flex,
@@ -13,21 +12,30 @@ import {
   SplitButton,
   Table,
 } from "components";
-import { ArrayElement, TableColumnString } from "types";
-import { useMutation, useQuery } from "@apollo/client";
+import { getMediaMaxQuery } from "consts";
+import { useFavoritesContact } from "context";
 import {
   DELETE_CONTACT,
   GET_CONTACT_COUNT,
   GET_CONTACT_LIST,
 } from "graphqlCodegen";
-import { GetContactQuery, Order_By } from "graphqlCodegen/build/graphql";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { formatDate } from "utils";
+import { Order_By } from "graphqlCodegen/build/graphql";
 import { MenuItem } from "primereact/menuitem";
+import { Toast } from "primereact/toast";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { TableColumnString } from "types";
+import { formatDate } from "utils";
+
+import {
+  ContactCountProps,
+  ContactHeaderTable,
+  ContactListType,
+  ContactSearchProps,
+  ShowDeleteModalStateProps,
+} from "./ContactsType";
 import DeleteModal from "./DeleteModal";
-import { css } from "@emotion/react";
-import { getMediaMaxQuery } from "consts";
-import { useFavoritesContact } from "context";
 
 const StyledHeading = styled(Heading)`
   text-align: center;
@@ -37,34 +45,7 @@ const StyledContainer = styled.div`
   padding: 2rem;
 `;
 
-type ContactHeaderTable =
-  | "firstName"
-  | "lastName"
-  | "phoneNumber"
-  | "id"
-  | "createdAt"
-  | "actions";
-
-type ContactListType = ArrayElement<GetContactQuery["contact"]>;
-
-interface ContactCountProps {
-  contact_aggregate: {
-    aggregate: {
-      count: number;
-    };
-  };
-}
-
 const CONTACT_DATA_LIMIT = 10;
-
-interface ShowDeleteModalStateProps {
-  id: number;
-  visible: boolean;
-}
-
-interface ContactSearchProps {
-  search: string;
-}
 
 export default function Contacts() {
   const [searchParams, setSearchParams] = useSearchParams({
@@ -286,7 +267,7 @@ export default function Contacts() {
         toggleCloseModal={() => setShowDeleteModal(undefined)}
         visible={!!showDeleteModal?.visible}
       />
-      <Toast ref={toast} />
+      <Toast ref={toast} position="top-center" />
       <Seo title="Contacts List" description="Contact List" />
       <Flex
         css={css({

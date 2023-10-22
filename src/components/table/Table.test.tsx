@@ -1,5 +1,6 @@
-import { render } from "../TestUtils";
 import { screen } from "@testing-library/react";
+
+import { render } from "../TestUtils";
 import Table from "./Table";
 
 interface TestDataProps {
