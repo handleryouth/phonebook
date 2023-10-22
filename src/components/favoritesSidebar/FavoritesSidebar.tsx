@@ -19,6 +19,7 @@ const StyledHeading = styled(Heading)`
   position: sticky;
   background-color: ${({ theme }) => theme.backgroundColors.blackLight};
   top: 0;
+  z-index: 2;
 `;
 
 export default function FavoritesSidebar({
