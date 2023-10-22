@@ -1,5 +1,4 @@
-import { screen } from "@testing-library/react";
-import { render } from "../TestUtils";
+import { render, screen } from "../TestUtils";
 import Pagination from "./Pagination";
 
 render(<Pagination handlePageChange={() => {}} page={1} totalRecords={50} />);

@@ -1,5 +1,4 @@
-import { screen } from "@testing-library/react";
-import { render } from "../TestUtils";
+import { render, screen } from "../TestUtils";
 import Heading from "./Heading";
 
 render(<Heading tag="heading1">Test</Heading>);

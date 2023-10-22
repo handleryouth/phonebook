@@ -6,7 +6,7 @@ render(<Footer />);
 
 describe("Footer", () => {
   it("should component correctly", () => {
-    const testing = screen.getByTestId("footer");
+    const testing = screen.getByRole("contentinfo");
     expect(testing).toBeInTheDocument();
   });
 });

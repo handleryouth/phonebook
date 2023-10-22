@@ -1,6 +1,5 @@
-import { screen } from "@testing-library/react";
 import Button from "./Button";
-import { render } from "../../TestUtils";
+import { render, screen } from "../../TestUtils";
 
 render(<Button label="Test" />);
 

@@ -1,5 +1,4 @@
-import { render } from "../TestUtils";
-import { screen } from "@testing-library/react";
+import { render, screen } from "../TestUtils";
 import Paragraph from "./Paragraph";
 
 render(<Paragraph>Test</Paragraph>);

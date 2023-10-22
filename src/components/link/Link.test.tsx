@@ -1,7 +1,5 @@
-import { screen } from "@testing-library/react";
 import Link from "./Link";
-import "@testing-library/jest-dom";
-import { render } from "../TestUtils";
+import { render, screen } from "../TestUtils";
 
 render(<Link to="#">test</Link>);
 

@@ -34,7 +34,7 @@ export default function Input({
     return (
       <Flex flexDirection="column" rowGap={2}>
         <label htmlFor={name}>{label}</label>
-        <StyledInput {...item} />
+        <StyledInput aria-labelledby={name} {...item} />
         {errorMessage && <small className="p-error">{errorMessage}</small>}
       </Flex>
     );

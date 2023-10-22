@@ -13,7 +13,7 @@ const StyledFooter = styled.footer`
 
 export default function Footer() {
   return (
-    <StyledFooter data-testid="footer">
+    <StyledFooter role="contentinfo">
       <Paragraph color="white">
         Made by{" "}
         <ExternalLink

@@ -1,6 +1,5 @@
 import LoadingIndicator from "./LoadingIndicator";
-import { render } from "../TestUtils";
-import { screen } from "@testing-library/react";
+import { render, screen } from "../TestUtils";
 
 render(<LoadingIndicator size={20} />);
 
