@@ -1,7 +1,7 @@
 import { PrimeReactProvider } from "primereact/api";
 import { RouteStack } from "routes";
 import { Layout } from "components";
-import { MemoryRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import {
   FavoritesContactProvider,
   SeoProvider,
@@ -15,7 +15,7 @@ function App() {
   return (
     <PrimeReactProvider>
       <ServicesProvider>
-        <MemoryRouter>
+        <BrowserRouter>
           <ThemeProvider>
             <SeoProvider>
               <FavoritesContactProvider>
@@ -25,7 +25,7 @@ function App() {
               </FavoritesContactProvider>
             </SeoProvider>
           </ThemeProvider>
-        </MemoryRouter>
+        </BrowserRouter>
       </ServicesProvider>
     </PrimeReactProvider>
   );

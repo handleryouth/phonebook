@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { useState } from "react";
 import { Global, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { getBreakpoint, getMediaMinQuery } from "consts";
@@ -8,7 +9,6 @@ import { Navbar } from "../navbar";
 import { FavoritesSidebar } from "../favoritesSidebar";
 import { Button } from "../button";
 import { BsFillBookmarkStarFill } from "react-icons/bs";
-import { useState } from "react";
 
 const StyledContainer = styled.div`
   min-height: 100vh;
@@ -51,7 +51,7 @@ export default function Layout({ children }: LayoutProps) {
       <Global
         styles={{
           body: {
-            fontFamily: "Inter Variable, sans-serif",
+            fontFamily: "Inter, sans-serif",
             margin: 0,
             backgroundcolor: theme.backgroundColors.black,
             minWidth: getBreakpoint("320"),

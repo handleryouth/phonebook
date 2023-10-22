@@ -1,4 +1,3 @@
-import { Contacts, CreateContact, EditContact, Home, NotFound } from "pages";
 import { lazy } from "react";
 import { RouteObject } from "react-router-dom";
 

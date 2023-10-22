@@ -5,6 +5,7 @@ import {
   SetStateAction,
   createContext,
   useContext,
+  useMemo,
   useState,
 } from "react";
 import { ArrayElement } from "types";
@@ -31,13 +32,16 @@ export function FavoritesContactProvider({
 }: FavoritesContactProviderProps) {
   const [favoritesContact, setFavoritesContact] = useState<ContactListType>();
 
+  const memoizedValue = useMemo(
+    () => ({
+      dispatch: setFavoritesContact,
+      values: favoritesContact,
+    }),
+    [favoritesContact]
+  );
+
   return (
-    <FavoritesContactContext.Provider
-      value={{
-        dispatch: setFavoritesContact,
-        values: favoritesContact,
-      }}
-    >
+    <FavoritesContactContext.Provider value={memoizedValue}>
       {children}
     </FavoritesContactContext.Provider>
   );

@@ -74,6 +74,11 @@ export default function Contacts() {
 
   const { dispatch, values: favoritesValue } = useFavoritesContact();
 
+  const favoritesValueKeys = useMemo(
+    () => (favoritesValue ? Object.keys(favoritesValue).map(Number) : []),
+    [favoritesValue]
+  );
+
   const searchQuery = searchParams.get("search");
 
   const pageQuery = searchParams.get("page");
@@ -82,12 +87,56 @@ export default function Contacts() {
 
   const { control, handleSubmit } = useForm<ContactSearchProps>();
 
+  const toggleErrorToast = (value: string) => {
+    toast.current?.show({
+      severity: "error",
+      summary: "Error",
+      detail: value,
+    });
+  };
+
   const [showDeleteModal, setShowDeleteModal] =
     useState<ShowDeleteModalStateProps>();
 
   const toast = useRef<Toast>(null);
 
   const navigate = useNavigate();
+
+  const { data: dataCount, loading: contactCountLoading } =
+    useQuery<ContactCountProps>(GET_CONTACT_COUNT, {
+      fetchPolicy: "no-cache",
+      variables: {
+        where: {
+          first_name: {
+            _ilike: caseInsensitiveSearch,
+          },
+          id: {
+            _nin: favoritesValueKeys,
+          },
+        },
+      },
+      onError: () => toggleErrorToast("Failed to fetch contact count"),
+    });
+
+  const { data, loading: contactListLoading } = useQuery(GET_CONTACT_LIST, {
+    fetchPolicy: "no-cache",
+    variables: {
+      limit: CONTACT_DATA_LIMIT,
+      offset: (Number(pageQuery) - 1) * CONTACT_DATA_LIMIT,
+      order_by: {
+        created_at: Order_By["Desc"],
+      },
+      where: {
+        first_name: {
+          _ilike: caseInsensitiveSearch,
+        },
+        id: {
+          _nin: favoritesValueKeys,
+        },
+      },
+    },
+    onError: () => toggleErrorToast("Failed to fetch contact list"),
+  });
 
   const actionItems = useCallback(
     (item: ContactListType): MenuItem[] => {
@@ -134,49 +183,9 @@ export default function Contacts() {
     [dispatch, favoritesValue]
   );
 
-  const { data: dataCount } = useQuery<ContactCountProps>(GET_CONTACT_COUNT, {
-    fetchPolicy: "no-cache",
-    variables: {
-      where: {
-        first_name: {
-          _ilike: caseInsensitiveSearch,
-        },
-      },
-    },
-  });
-
-  const { data, loading } = useQuery(GET_CONTACT_LIST, {
-    fetchPolicy: "no-cache",
-    variables: {
-      limit: CONTACT_DATA_LIMIT,
-      offset: (Number(pageQuery) - 1) * CONTACT_DATA_LIMIT,
-      order_by: {
-        created_at: Order_By["Desc"],
-      },
-      where: {
-        first_name: {
-          _ilike: caseInsensitiveSearch,
-        },
-      },
-    },
-    onError: () => {
-      toast.current?.show({
-        severity: "error",
-        summary: "Error",
-        detail: "Failed to fetch contact list",
-      });
-    },
-  });
-
   const [deleteContact] = useMutation(DELETE_CONTACT, {
     refetchQueries: [GET_CONTACT_LIST],
-    onError: () => {
-      toast.current?.show({
-        severity: "error",
-        summary: "Error",
-        detail: "Failed to delete contact",
-      });
-    },
+    onError: () => toggleErrorToast("Failed to delete contact"),
     update: (cache, { data }) => {
       const mutationKey = data?.delete_contact_by_pk;
 
@@ -259,6 +268,13 @@ export default function Contacts() {
 
             onCompleted: () => {
               setShowDeleteModal(undefined);
+              if (favoritesValue?.[showDeleteModal.id] !== undefined) {
+                dispatch((prevState) => {
+                  const newState = { ...prevState };
+                  delete newState[showDeleteModal.id];
+                  return newState;
+                });
+              }
               toast.current?.show({
                 severity: "success",
                 summary: "Success",
@@ -327,7 +343,7 @@ export default function Contacts() {
           id: true,
         }}
         keyExtractor="id"
-        loading={loading}
+        loading={contactListLoading || contactCountLoading}
       />
 
       <Pagination
